@@ -14,6 +14,11 @@ n0=15;
 ntot=2392.10;
 
 % for-loop for different apoptosis rates
+X1=zeros(1601,1);
+P_TA=zeros(1601,3);
+X2=zeros(5001,1);
+P_FD=zeros(5001,3);
+P_tot=zeros(5001,3);
 mm=1;
 for g=[1/24,1/36,1/72]
 
@@ -44,7 +49,7 @@ F_tot = @(x)x.^(n0).*(gamma(1 - a).*h(x).*(1 - (a +2*b*(1-x)+ q2(x))./(a+2*b*(1-
 C = [1+1i -1+1i -1-1i 1-1i];
 
 % calculation of probability of TA cell population
-for k=0:1600
+parfor k=0:1600
     X1(k+1)=k;
     fun_TA=@(x)F_TA(x)./x.^(k+1);
     % calculation via Cauchy integration
@@ -52,7 +57,7 @@ for k=0:1600
 end
 
 % calculation of probability of FD and total cell population
-for k=0:1:6000
+parfor k=0:5000
     X2(k+1)=k;
     fun_FD=@(x)F_FD(x)./x.^(k+1);
     fun_tot=@(x)F_tot(x)./x.^(k+1);
@@ -104,6 +109,5 @@ xlabel('Total number of cell per crypt')
 ylabel('Probability mass function')
 xlim([0 5000])
 ylim([0 6*10^(-4)])
-
 
 
