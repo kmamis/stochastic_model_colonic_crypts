@@ -43,14 +43,11 @@ C = [1+1i -1+1i -1-1i 1-1i];
 % calculation of probability of TA cell population
 X1=zeros(1601,1);
 P_TA=zeros(1601,1);
-p_TA=zeros(1601,1);
 parfor k=0:1600
     X1(k+1)=k;
     fun_TA=@(x)F_TA(x)./x.^(k+1);
     % calculation via Cauchy integration
     P_TA(k+1)=real((1/(2*pi*1i))*integral(fun_TA,(1+1i),(1+1i),'Waypoints',C));
-    % calculation via explicit formula
-    p_TA(k+1)=((gamma(sym(rr+k))/(factorial(sym(k))*gamma(rr)))*((d-l)/d)^rr*(l/d)^k);
 end
 
 % calculation of probability of FD and total cell population
@@ -64,6 +61,19 @@ parfor k=0:5000
     P_FD(k+1)=real((1/(2*pi*1i))*integral(fun_FD,(1+1i),(1+1i),'Waypoints',C));
     P_tot(k+1)=real((1/(2*pi*1i))*integral(fun_tot,(1+1i),(1+1i),'Waypoints',C));
 end
+
+% calculation of explicit formula for TA cell population distribution
+x_TA = 0:4000;
+p_TA = nbinpdf(x_TA,rr,(d-l)/d);
+
+% calculation of approximation for FD cell population distribution
+x_FD = 0:6000;
+dd=1;
+for n_TA=0:4000
+    p(dd,:)=poisspdf(x_FD,d*n_TA/g);
+    dd=dd+1;
+end 
+p_FD=p_TA*p;
 
 % data from Bravo and Axelrod 2013
 TA=[880.00
@@ -174,7 +184,7 @@ ax.FontSize = 20;
 ax.LineWidth = 2;
 histogram(TA,'Normalization','pdf','LineWidth',1,'FaceColor','#FEC471','EdgeColor','#BB8041','FaceAlpha',1)
 plot(X1,P_TA,'color','#a600ff','linewidth',4)
-plot(X1(1:70:end),p_TA(1:70:end),'ko','MarkerFaceColor','#5ce1e6','MarkerSize',8,'linewidth',1.5)
+plot(x_TA(1:70:end),p_TA(1:70:end),'ko','MarkerFaceColor','#5ce1e6','MarkerSize',8,'linewidth',1.5)
 legend('experimental data','Cauchy integration','explicit formula','fontsize',14)
 xlabel('Number of TA cells')
 ylabel('Probability mass function')
@@ -188,9 +198,8 @@ ax.FontSize = 20;
 ax.LineWidth = 2;
 histogram(FD,'Normalization','pdf','LineWidth',1,'FaceColor','#E4CCBB','EdgeColor','#9D8678','FaceAlpha',1)
 plot(X2,P_FD,'color','#a600ff','linewidth',4)
-legend('experimental data','Cauchy integration','fontsize',14)
-xlabel('Number of FD cells')
-ylabel('Probability mass function')
+plot(x_FD(1:180:end),p_FD(1:180:end),'ko','MarkerFaceColor','#ffac50','MarkerSize',8,'linewidth',1.5)
+legend('experimental data','Cauchy integration','approximation formula','fontsize',14)
 xlim([0 5000])
 ylim([0 8*10^(-4)])
 
