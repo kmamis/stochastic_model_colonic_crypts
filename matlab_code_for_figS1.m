@@ -5,12 +5,12 @@ clear all
 % l stands for lambda, TA division rate
 % g stands for gamma, FD apoptosis rate 
 
-l=1/14;
-g=1/(1.5*24);
-r=1/(24);
+l=1/30;
+g=1/(3.5*24);
+r=1/(2.5*24);
 
 % number of stem cells
-n0=15;
+n0=18;
 % average number of cells per crypt
 ntot=2392.10;
 
@@ -88,8 +88,8 @@ plot(binCenters_TA, Values_TA,'ko','MarkerFaceColor','#5ce1e6','MarkerSize',8,'l
 legend('model results','Gillespie simulations','fontsize',14)
 xlabel('Number of TA cells')
 ylabel('Probability mass function')
-xlim([0 1600])
-ylim([0 2*10^(-3)])
+% xlim([0 1600])
+% ylim([0 2*10^(-3)])
 
 figure
 hold on
@@ -101,8 +101,8 @@ plot(binCenters_FD, Values_FD,'ko','MarkerFaceColor','#5ce1e6','MarkerSize',8,'l
 legend('model results','Gillespie simulations','fontsize',14)
 xlabel('Number of FD cells')
 ylabel('Probability mass function')
-xlim([0 5000])
-ylim([0 8*10^(-4)])
+% xlim([0 5000])
+% ylim([0 8*10^(-4)])
 
 figure
 hold on
@@ -114,5 +114,5 @@ plot(binCenters_tot, Values_tot,'ko','MarkerFaceColor','#5ce1e6','MarkerSize',8,
 legend('model results','Gillespie simulations','fontsize',14)
 xlabel('Total number of cell per crypt')
 ylabel('Probability mass function')
-xlim([0 5000])
-ylim([0 6*10^(-4)])
+% xlim([0 5000])
+% ylim([0 6*10^(-4)])

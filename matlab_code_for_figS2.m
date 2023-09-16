@@ -5,12 +5,12 @@ clear all
 % l stands for lambda, TA division rate
 % g stands for gamma, FD apoptosis rate 
 
-l=1/14;
-g=1/(1.5*24);
-r=1/(24);
+l=1/30;
+g=1/(3.5*24);
+r=1/(2.5*24);
 
 % number of stem cells
-n0=15;
+n0=18;
 % average number of cells per crypt
 ntot=2392.10;
 
@@ -114,7 +114,7 @@ TA_data=[880.00
 462.00
 320.00
 352.00
-780.00]-15;
+780.00]-18;
 
 FD_data=[2552.00
 2000.00
@@ -192,8 +192,8 @@ plot(binCenters_TA, Values_TA,'ko','MarkerFaceColor','#5ce1e6','MarkerSize',8,'l
 legend('experimental data','model results','Gillespie simulations','fontsize',14)
 xlabel('Number of TA cells')
 ylabel('Probability mass function')
-xlim([0 1600])
-ylim([0 2*10^(-3)])
+% xlim([0 1600])
+% ylim([0 2*10^(-3)])
 
 figure
 f2=gcf;
@@ -207,20 +207,20 @@ plot(binCenters_FD, Values_FD,'ko','MarkerFaceColor','#5ce1e6','MarkerSize',8,'l
 legend('experimental data','model results','Gillespie simulations','fontsize',14)
 xlabel('Number of FD cells')
 ylabel('Probability mass function')
-xlim([0 5000])
-ylim([0 8*10^(-4)])
+% xlim([0 5000])
+% ylim([0 8*10^(-4)])
 
 figure
 hold on
 ax = gca;
 ax.FontSize = 20;
 ax.LineWidth = 2;
-histogram(TA_data+FD_data+15,'Normalization','pdf','LineWidth',1,'FaceColor','#faa0a0','EdgeColor','#c88080','FaceAlpha',1)
+histogram(TA_data+FD_data+18,'Normalization','pdf','LineWidth',1,'FaceColor','#faa0a0','EdgeColor','#c88080','FaceAlpha',1)
 plot(X2,P_tot,'color','#a600ff','linewidth',4)
 plot(binCenters_tot, Values_tot,'ko','MarkerFaceColor','#5ce1e6','MarkerSize',8,'linewidth',1.5)
 legend('experimental data','model results','Gillespie simulations','fontsize',14)
 xlabel('Total number of cell per crypt')
 ylabel('Probability mass function')
-xlim([0 5000])
-ylim([0 8*10^(-4)])
+% xlim([0 5000])
+% ylim([0 8*10^(-4)])
 
